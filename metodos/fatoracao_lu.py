@@ -78,7 +78,7 @@ class MetodoFatoracaoLU(Funcoes):
     
     def mostrar_resultado(self, a, p):
         # Define a precisão global para impressão
-        np.set_printoptions(precision=5, suppress=True)
+        np.set_printoptions(precision=3, suppress=True)
         
         # Converte o vetor p em uma matriz coluna para visualização
         p_coluna = p.reshape(-1, 1)
@@ -86,9 +86,9 @@ class MetodoFatoracaoLU(Funcoes):
        
         # Imprime o resultado de p como uma matriz coluna usando NumPy
         print("Resultado:")
-        print(f'p =\n{np.array_str(p_coluna, precision= 5)}')
+        print(f'p =\n{np.array_str(p_coluna, precision= 3)}')
         
-        print(f'\nVariação percentual de p =\n{np.array_str(var_percetual, precision=5)}')
+        print(f'\nVariação percentual de p =\n{np.array_str(var_percetual, precision=3)}')
         
         # Comparação dos valores da variação percentual
         for i, valor in enumerate(var_percetual):
