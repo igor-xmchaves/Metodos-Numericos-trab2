@@ -39,10 +39,12 @@ class Funcoes(object):
 class MetodoFatoracaoLU(Funcoes):
     def __init__(self, a, matriz_c, matriz_v):
         self.a = a
-        self.matriz_c = np.copy(matriz_c).astype(float)
-        self.matriz_v = np.copy(matriz_v).astype(float)
+        self.matriz_c = matriz_c
+        self.matriz_v = matriz_v
     
     def executar_fat_lu(self, matriz_c, matriz_v):
+        matriz_c = np.copy(matriz_c)
+        matriz_v = np.copy(matriz_v)
         # Inicialização do vetor de permutações
         h = np.arange(matriz_c.shape[1])
         for i in range(matriz_c.shape[1]):

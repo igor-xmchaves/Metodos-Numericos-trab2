@@ -21,12 +21,15 @@ class Funcoes(object):
 class MetodoGaussSeidel(Funcoes):
     def __init__(self, a, matriz_c, matriz_v,  e= 0.03, iterMax= 100):
         self.a = a
-        self.matriz_c = np.copy(matriz_c).astype(float)
-        self.matriz_v = np.copy(matriz_v).astype(float)
+        self.matriz_c = matriz_c
+        self.matriz_v = matriz_v
         self.e = e
         self.iterMax = iterMax
     
     def executar_gauss_seidel(self, matriz_c, matriz_v):
+        matriz_c = np.copy(matriz_c)
+        matriz_v = np.copy(matriz_v)
+        
         # Construção da matriz e vetor de iterações
         p = np.zeros(matriz_c.shape[1])
         for i in range(self.matriz_c.shape[1]):
