@@ -5,7 +5,7 @@ class Funcoes(object):
         p = np.zeros(matriz_c.shape[1])
         for i in range(matriz_c.shape[1]):
             soma = 0
-            for j in range(i-1):
+            for j in range(i):  # Corrigido de range(i-1) para range(i)
                 soma += matriz_c[i, j] * p[j]
             p[i] = (matriz_v[i] - soma)
         return p
@@ -16,17 +16,18 @@ class Funcoes(object):
             soma = 0
             for j in range(i+1, matriz_c.shape[1]):
                 soma += matriz_c[i, j] * p[j]
-            p[i] = (matriz_v[i] - soma) / matriz_c[i, i]
+            p[i] = (matriz_v[i] - soma) / matriz_c[i, i]  # Evitar divisão por zero
         return p
         
     def escolhe_pivo(self, matriz_c, k):
         pivo = abs(matriz_c[k,k])
         r = k
-        for i in range(k+1, matriz_c.shape[1]):
+        for i in range(k+1, matriz_c.shape[0]):  # Corrigido para matriz_c.shape[0]
             if abs(matriz_c[i,k]) > pivo:
                 pivo = abs(matriz_c[i,k])
                 r = i
         return pivo, r
+    
     def permuta(self, h, matriz_c, k, r):
         # Permutando os elementos do vetor h
         h[k], h[r] = h[r], h[k]
@@ -38,11 +39,10 @@ class Funcoes(object):
 class MetodoFatoracaoLU(Funcoes):
     def __init__(self, a, matriz_c, matriz_v):
         self.a = a
-        self.matriz_c = matriz_c
-        self.matriz_v = matriz_v
+        self.matriz_c = np.copy(matriz_c).astype(float)
+        self.matriz_v = np.copy(matriz_v).astype(float)
     
     def executar_fat_lu(self, matriz_c, matriz_v):
-        matriz_c = np.copy(matriz_c)
         # Inicialização do vetor de permutações
         h = np.arange(matriz_c.shape[1])
         for i in range(matriz_c.shape[1]):
@@ -55,13 +55,14 @@ class MetodoFatoracaoLU(Funcoes):
             if r != k:
                 self.permuta(h, matriz_c, k, r)
         
-        # Guarda fatores m em matriz_c
-        for i in range(k+1,matriz_c.shape[1]):  
-            m = matriz_c[i, k]/matriz_c[k, k]
-            matriz_c[i, k] = m
+            # Guarda fatores m em matriz_c e faz a fatoração LU
+            for i in range(k+1, matriz_c.shape[1]):  
+                m = matriz_c[i, k]/matriz_c[k, k]
+                matriz_c[i, k] = m
 
-            for j in range(k+1, matriz_c.shape[1]):
-                matriz_c[i, j] -= m * matriz_c[k, j]
+                for j in range(k+1, matriz_c.shape[1]):  # Corrigido a indentação
+                    matriz_c[i, j] -= m * matriz_c[k, j]
+                
     
         # Aplica permutações em matriz_v
         matriz_vlin = np.zeros(matriz_c.shape[1])
@@ -83,9 +84,9 @@ class MetodoFatoracaoLU(Funcoes):
        
         # Imprime o resultado de p como uma matriz coluna usando NumPy
         print("Resultado:")
-        print(f'p =\n{np.array_str(p_coluna)}')
+        print(f'p =\n{np.array_str(p_coluna, precision= 5)}')
         
-        print(f'\nVariação percentual de p =\n{var_percetual}')
+        print(f'\nVariação percentual de p =\n{np.array_str(var_percetual, precision=5)}')
         
         # Comparação dos valores da variação percentual
         for i, valor in enumerate(var_percetual):

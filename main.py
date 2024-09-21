@@ -11,44 +11,45 @@ def executar_fatoracao_LU(a, matriz_c, matriz_v):
     metodo.mostrar_resultado(a, p)
 
 def executar_gauss_jordan(a, matriz_c, matriz_v):
-    # Placeholder para implementação
-    print("\nExecutando Gauss-Jordan (ou Método de Cramer)...")
-    # código para Gauss-Jordan / Método de Cramer
+    print("\nExecutando Gauss-Jordan/Cramer...")
+    metodo = RegraDeCramer(a, matriz_c, matriz_v)
+    p = metodo.calcular_solucao()
+    metodo.mostrar_resultado(a, p)
 
 def executar_gauss_seidel(a, matriz_c, matriz_v):
-    # Placeholder para implementação
     print("\nExecutando Gauss-Seidel...")
-    # código para Gauss-Seidel
-
+    metodo = MetodoGaussSeidel(a, matriz_c, matriz_v)
+    p = metodo.executar_gauss_seidel(matriz_c, matriz_v)
+    metodo.mostrar_resultado(a, p)
 def main():
     # Variáveis de input do sistema
-    try:
-        a = input_float("Digite o valor de A: ")
-        n = input_int("Digite o valor de n (tamanho da matriz): ")
+    # try:
+    #     a = input_float("Digite o valor de A: ")
+    #     n = input_int("Digite o valor de n (tamanho da matriz): ")
 
-        if n <= 0:
-            print("O tamanho da matriz deve ser maior que 0.")
-            return
+    #     if n <= 0:
+    #         print("O tamanho da matriz deve ser maior que 0.")
+    #         return
 
-        matriz_c = input_matriz_c(n)
-        matriz_v = input_matriz_v(n)
+    #     matriz_c = input_matriz_c(n)
+    #     matriz_v = input_matriz_v(n)
         
-    except Exception as e:
-        print(f"Erro inesperado: {e}")
-        return
+    # except Exception as e:
+    #     print(f"Erro inesperado: {e}")
+    #     return
     
     # Variáveis de teste
-    # a = 1
-    # matriz_c = np.array([
-    #     [10, 1, 1],
-    #     [1, 10, 1],
-    #     [1, 1, 10]
-    # ])
-    # matriz_v = np.array([
-    #     [12],
-    #     [12],
-    #     [12]
-    # ])
+    a = 1
+    matriz_c = np.array([
+        [10, 1, 1],
+        [1, 10, 1],
+        [1, 1, 10]], dtype= float
+    )
+    matriz_v = np.array([
+        [12],
+        [12],
+        [12]], dtype=float
+    )
     
     while True:
         exibir_menu()
